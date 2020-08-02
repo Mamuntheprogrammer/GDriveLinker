@@ -12,8 +12,11 @@ window.geometry('600x180')
 # ----------- Functions -------------
 def past():
 	txt.insert(0, pyperclip.paste())
-	a="Mamun"
-	txt2.insert(0,a)
+	a=txt.get()
+	b=a.split('/')
+	dlink="https://drive.google.com/"+"uc?id="+b[5]+"&export=download"
+	txt2.insert(0,dlink)
+
 	
 def copy():
 	a=txt2.get()

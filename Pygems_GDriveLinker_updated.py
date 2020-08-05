@@ -1,3 +1,9 @@
+from __future__ import print_function
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
 from tkinter import *
 import tkinter as tk
 from tkinter.font import Font
@@ -5,6 +11,22 @@ import webbrowser
 from tkinter import ttk
 from tkinter import filedialog,messagebox
 import pyperclip
+import csv
+import os
+
+username = os.getlogin()
+
+
+
+
+
+
+
+
+
+
+
+
 
 window =tk.Tk()
 main_menu=tk.Menu(window)
@@ -34,13 +56,84 @@ boxframe=Frame(window)
 fframe=Frame(window)
 ccframe=Frame(window)
 
+SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
+
+def main():
+    """Shows basic usage of the Drive v3 API.
+    Prints the names and ids of the first 10 files the user has access to.
+    """
+    creds = None
+    # The file token.pickle stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('drive', 'v3', credentials=creds)
+
+    listOfFiles = []
+    a=txt.get()
+    b=a.split('/')
+    c=b[5].split('?')
+    # print(c[0])
+    tttt=c[0]
+
+    # query = f"'1XItNg77h4gW_YJTcjTIfmC4KTEx-RXYR' in parents"
+
+    query = "'{}' in parents".format(tttt)
+
+    page_token = None
+    while True:
+        response = service.files().list(
+            q=query,
+            fields="nextPageToken, files(id, name)",
+            pageToken=page_token,
+            includeItemsFromAllDrives=True, 
+            supportsAllDrives=True
+        ).execute()
+
+        for file in response.get('files', []):
+            listOfFiles.append(file)
+
+        page_token = response.get('nextPageToken', None)
+        if page_token is None:
+            break
+
+       #--------------------------------------------------------
+    nam=[]
+    main.dlink=[]
+
+	
+
+    for x in listOfFiles:
+	    nam.append("https://drive.google.com/"+"uc?id="+x['id']+"&export=download")
+	    main.dlink.append([x['name'],"https://drive.google.com/"+"uc?id="+x['id']+"&export=download"])
+    
 
 
+    headers = ["Available Direct Download Links From Shared Folder  :" ]
+    row_format ="{:<8}" # left or right align, with an arbitrary '8' column width 
 
+    listbox.insert(0, row_format.format(*headers, sp=" "*2))
 
+   
+    for items in nam:
+    	listbox.insert(END, items)
 
-
-
+    #----------------------------------------------------
+  
 
 # ----------- Functions -------------
 
@@ -52,17 +145,24 @@ def past():
 		txt.insert(0, pyperclip.paste())
 		a=txt.get()
 		b=a.split('/')
-		dlink="https://drive.google.com/"+"uc?id="+b[5]+"&export=download"
-		txt2.insert(0,dlink)
+		if b[3]=="file":
+			dlink="https://drive.google.com/"+"uc?id="+b[5]+"&export=download"
+			txt2.insert(0,dlink)
+		elif b[3]=="drive":
+			main()
 	except:
 		clear()
 		pygems()
 
 	
 def copy():
-	a=txt2.get()
-	pyperclip.copy(a)
-	ccclbtn.set("Copied")
+	try:
+		a=txt2.get()
+		pyperclip.copy(a)
+		btn_txt.set("Copied")
+	except:
+		messagebox.showerror("Error", "Have Nothing To Copy")
+
 
 def scopy():
 	try:
@@ -77,14 +177,28 @@ def scopy():
 
 
 def lcopy():
-	all_items = listbox.get(0, tk.END)
-	print(all_items)
-	lcbtn.set("Copied")
+	try:	
+		file = open(f'C:\\Users\\{username}\\Desktop\\PyGems_GDrive_Linker.csv', 'w', newline ='') 
+		  
+		with file: 
+		    # identifying header
+		    write = csv.writer(file)   
+		    write.writerow(["File Name","Direct Links"]) 
+		    # writing data row-wise into the csv file 
+		    write.writerows(main.dlink)
+		    messagebox.showinfo("PyGems GDrive Linker","Exported To your Desktop")
+		path=f'C:\\Users\\{username}\\Desktop\\PyGems_GDrive_Linker.csv'
+		os.startfile(path)
+	except:
+		messagebox.showerror("Error", "Have Nothing to Export")
+
+
 
 
 def clear():
 	txt.delete(0, 'end')
 	txt2.delete(0, 'end')
+	listbox.delete(0, 'end')
 
 def opnlink(url):
     webbrowser.open_new(url)
@@ -145,8 +259,8 @@ scrollbar = Scrollbar(boxframe)
 scrollbar.pack(side=RIGHT, fill=Y)
 
 listbox = Listbox(boxframe, yscrollcommand=scrollbar.set,width=90)
-for i in range(40):
-    listbox.insert(END, "https://drive.google.com/file/d/1NpyIFJP__DTdWd7WaIlDfrOVNxIclBu6/view?usp=sharing")
+# for i in range(40):
+#     listbox.insert(END, "Newfile :#   https://drive.google.com/")
 listbox.pack(side=LEFT, fill=BOTH)
 
 scrollbar.config(command=listbox.yview)
@@ -165,8 +279,8 @@ ccclbtn.pack(side=LEFT)
 lcbtn=StringVar()
 cclbl = Label(ccframe, text="              ")
 cclbl.pack(side=LEFT,padx=10)
-cclbtn = Button(ccframe, text="Copy List", command=lcopy,textvariable=lcbtn,width=20,relief=RAISED,font=('Times 10 bold'),fg='#fcf9ec',bg='#132238')
-lcbtn.set("Copy List")
+cclbtn = Button(ccframe, text="Export List", command=lcopy,textvariable=lcbtn,width=20,relief=RAISED,font=('Times 10 bold'),fg='#fcf9ec',bg='#132238')
+lcbtn.set("Export List")
 cclbtn.pack(side=LEFT)
 
 ccframe.pack(pady=10)

@@ -48,10 +48,10 @@
     <img src="images/gdrive.png" alt="Logo" >
   </a>
 
-  <h3 align="center"># PyGems Office Utilities</h3>
+  <h3 align="center"># Google GDriveLinker</h3>
 
   <p align="center">
-    An awesome multipurpose Office Utility Tool for You!
+    An awesome GUI tool to generate direct download link for your google drive !
     <br />
     <!-- <a href=""><strong>Explore the docs »</strong></a> -->
     <a href="https://github.com/Mamuntheprogrammer/GDriveLinker">View Demo</a>

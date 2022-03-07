@@ -81,7 +81,7 @@
 ## About The Project
 
 <p align="center">
-  <img src="https://github.com/Mamuntheprogrammer/GDriveLinker/blob/main/images/combo.gif?raw=true" alt="Pygems Office Utility"/>
+  <img src="https://github.com/Mamuntheprogrammer/GDriveLinker/blob/master/images/gdrivelinker.png?raw=true" alt="Pygems Office Utility"/>
 </p>
 
 There are many great utility tools out there but you nerver found something like "PyGems Office Utility" .

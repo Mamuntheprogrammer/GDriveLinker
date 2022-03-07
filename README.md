@@ -120,7 +120,7 @@ This Gui generate direct download link from google drive sharable file link
     <img src="images/linkedin.png" alt="Logo"  >
   </a>
 
-Project Link: [https://github.com/Mamuntheprogrammer/GDriveLinker](https://github.com/Mamuntheprogrammer/GDriveLinkere)
+Project Link: [https://github.com/Mamuntheprogrammer/GDriveLinker](https://github.com/Mamuntheprogrammer/GDriveLinker)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

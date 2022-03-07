@@ -69,7 +69,6 @@
   <summary>Table of Contents</summary>
   <ol>
      <li><a href="#built-with">Built With</a></li>
-    <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#contact">Contact</a></li>
 
   </ol>
@@ -84,14 +83,8 @@
   <img src="https://github.com/Mamuntheprogrammer/GDriveLinker/blob/master/images/gdrivelinker.png?raw=true" alt="Pygems Office Utility"/>
 </p>
 
-There are many great utility tools out there but you nerver found something like "PyGems Office Utility" .
-Here's why:
-* It is the combination of several utility .
-  1. PyGems Excel Utility
-  2. PyGems PDF Utility
-  3. PyGems Batch File Renamer
-* Simple to use and Fast
-* Free and Opensource
+
+This Gui generate direct download link from google drive sharable file link
 
 
 
@@ -104,8 +97,9 @@ Here's why:
 
 * [Python](https://www.python.org/downloads/)
 * [Webbrowser](https://pypi.org/project/pycopy-webbrowser/)
-* [PyPDF2](https://pypi.org/project/PyPDF2/)
-* [Pandas](https://pypi.org/project/pandas/)
+* [google-api-python-client](https://pypi.org/project/google-api-python-client/)
+* [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/)
+* [pyperclip](https://pypi.org/project/pyperclip/)
 * [Cx-Freeze](https://pypi.org/project/cx-Freeze/)
 
 
@@ -116,20 +110,6 @@ Here's why:
 <!-- GETTING STARTED -->
 
 
-### Prerequisites
-
-#### Must have Python Installed
-
-
-### Installation
-
-* Create a folder and put all the files inside it.
-* Create a virtual environtment - virtualenv env
-* Activate VirtualENV - ubuntu : source env/bin/activate || windows : . .\env\Scripts\activate
-* Run requirements.txt - pip install -r requirements.txt
-* Run the Application 
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
